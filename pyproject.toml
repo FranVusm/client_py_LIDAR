@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "si3-opcua-client"
+version = "0.1.0"
+description = "Clean architecture OPC UA client for SI3 monitoring and history with Bokeh visualization"
+requires-python = ">=3.8"
+
+
+
+dependencies = [
+  "asyncua>=1.0.0",
+  "bokeh>=3.1.0",
+  "tornado>=6.2",
+]
+
+# Si quieres ejecutables tipo `si3-client`:
+[project.scripts]
+si3-client = "src.main:run"
+
+[tool.setuptools.packages.find]
+where = ["src"]
