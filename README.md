@@ -92,6 +92,7 @@ Once running, the client provides an interactive menu:
 1) Show Graph (Bokeh)
 2) Call generic method (call: <name>)
 3) Test OPC UA getters (usage example)
+4) Test OPC UA setters (usage example)
 b) Put in background (recover terminal)
 q) Exit
 ==============================================
@@ -102,6 +103,7 @@ Option:
 - **1** - Opens/refreshes the Bokeh web interface for real-time data visualization
 - **2** - Calls a generic OPC UA method by name
 - **3** - Demonstrates how to use the getter functions with example calls
+- **4** - Demonstrates how to use the setter functions with example calls
 - **b/bg/background** - Puts the process in background mode (frees the terminal)
 - **q/quit/exit** - Exits the client
 
