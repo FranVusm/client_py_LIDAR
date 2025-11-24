@@ -21,8 +21,8 @@ A clean architecture OPC UA client for SI3 monitoring and history with Bokeh vis
 ### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/isaiash/si3-python-client.git
-cd si3-python-client/si3-python-client-sub
+git clone https://github.com/FranVusm/client_py_LIDER.git
+cd client_py_LIDER
 ```
 
 ## Virtual Environment Setup
