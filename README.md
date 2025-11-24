@@ -173,14 +173,14 @@ async def get_<attribute_name>(connector) -> Optional[<type>]:
 - `get_app_start_time(connector)` - Application start time
 - `get_serial_number(connector)` - Serial number
 - `get_prosys_sdk_version(connector)` - Prosys SDK version
-
-#### Session & Configuration
 - `get_current_session_number(connector)` - Current session number
 - `get_sessions_name(connector)` - Sessions name
 - `get_random_generator_code(connector)` - Random generator code
 - `get_verbose_status(connector)` - Verbose status
-- `get_update_time(connector)` - Update time
+- `get_updatetime(connector)` - Update time
 - `get_isotstamp(connector)` - ISO timestamp
+- `get_heartbeat(connector)` - Heartbeat counter
+- `get_table_file_name(connector)` - Table file name
 
 #### Error Information
 - `get_error_number(connector)` - Error number
@@ -189,46 +189,61 @@ async def get_<attribute_name>(connector) -> Optional[<type>]:
 - `get_error_number_recovered(connector)` - Recovered error number
 - `get_error_number_outofrange(connector)` - Out of range error flag
 
-#### PR59 Sensor
-- `get_pr59_temp1(connector)` - Temperature 1
-- `get_pr59_temp2(connector)` - Temperature 2
-- `get_pr59_temp3(connector)` - Temperature 3
-- `get_pr59_temp4_fet(connector)` - Temperature 4 FET
-- `get_pr59_sp1(connector)` - SP1
-- `get_pr59_main_voltage(connector)` - Main voltage
-- `get_pr59_main_current(connector)` - Main current
-- `get_pr59_fan1_state(connector)` - Fan 1 state
-- `get_pr59_fan2_state(connector)` - Fan 2 state
-- `get_pr59_comm_port(connector)` - Communication port
+#### Raw Channels
+- `get_elastic_channel_355_nm(connector)` - Elastic Channel 355nm
+- `get_elastic_channel_532_nm(connector)` - Elastic Channel 532nm
+- `get_elastic_channel_1064_nm(connector)` - Elastic Channel 1064nm
+- `get_raman_channel_n2_387_nm(connector)` - Raman Channel N2 387nm
+- `get_raman_channel_h2o(connector)` - Raman Channel H2O
+- `get_raman_range_signal_counts(connector)` - Raman Range Signal Counts
+- `get_statistical_error_per_bin(connector)` - Statistical Error Per Bin
+- `get_integration_time(connector)` - Integration Time
+- `get_co_polar_355_nm(connector)` - Co-Polar 355nm
+- `get_cross_polar_355_nm(connector)` - Cross-Polar 355nm
+- `get_co_polar_532_nm(connector)` - Co-Polar 532nm
+- `get_cross_polar_532_nm(connector)` - Cross-Polar 532nm
+- `get_depolarisation_ratio_profile(connector)` - Depolarisation Ratio Profile
 
-#### TDC (Time-to-Digital Converter)
-- `get_tdc_counter1(connector)` through `get_tdc_counter5(connector)` - Counters 1-5
-- `get_tdc_acq_index(connector)` - Acquisition index
-- `get_tdc_status(connector)` - TDC status
-- `get_tdc_internal_temp(connector)` - Internal temperature
-- `get_tdc_fpga_temp(connector)` - FPGA temperature
-- `get_tdc_wr_pps(connector)` - WR PPS status
-- `get_tdc_wr_10mhz(connector)` - WR 10MHz status
-- `get_tdc_data_file_name(connector)` - Data file name
+#### Derived Parameters
+- `get_backscatter_coefficient_beta_z(connector)` - Backscatter Coefficient Beta Z
+- `get_extinction_coefficient_alpha_z(connector)` - Extinction Coefficient Alpha Z
+- `get_aerosol_optical_depth(connector)` - Aerosol Optical Depth
+- `get_lidar_ratio_s_z(connector)` - Lidar Ratio S Z
+- `get_humidity_profile_h2o(connector)` - Humidity Profile H2O
+- `get_pbl_height(connector)` - PBL Height
+- `get_cloud_base_height(connector)` - Cloud Base Height
+- `get_snr_per_bin(connector)` - SNR Per Bin
 
-#### Ximea Camera
-- `get_ximea_enc64_file(connector)` - Enc64 file
-- `get_ximea_delta_x(connector)` - Delta X
-- `get_ximea_delta_y(connector)` - Delta Y
-- `get_ximea_r80(connector)` - R80 value
-- `get_ximea_r80_center_x(connector)` - R80 center X
-- `get_ximea_r80_center_y(connector)` - R80 center Y
-- `get_ximea_temperature(connector)` - Temperature
-- `get_ximea_status(connector)` - Status
+#### Metadata & Quality Indicators
+- `get_timestamp_utc(connector)` - Timestamp UTC
+- `get_integration_accumulation_time(connector)` - Integration Accumulation Time
+- `get_number_of_accumulated_pulses(connector)` - Number of Accumulated Pulses
+- `get_vertical_resolution_bin_size(connector)` - Vertical Resolution Bin Size
+- `get_temporal_resolution(connector)` - Temporal Resolution
+- `get_global_snr(connector)` - Global SNR
+- `get_quality_flags(connector)` - Quality Flags
+- `get_internal_temperatures(connector)` - Internal Temperatures
+- `get_laser_readings_energy_voltage_prf(connector)` - Laser Readings
 
-#### Other
-- `get_heartbeat(connector)` - Heartbeat counter
-- `get_fw_position(connector)` - Filter wheel position
-- `get_simul_flag(connector)` - Simulation flag
-- `get_ntp_sync(connector)` - NTP sync status
-- `get_cx7000_port_values(connector)` - CX7000 port values
-- `get_cx7000_status(connector)` - CX7000 status
-- `get_table_file_name(connector)` - Table file name
+#### Pointing & Scanning
+- `get_motorised_2_axis_mount(connector)` - Motorised 2-Axis Mount
+- `get_three_d_scanning_capability(connector)` - 3D Scanning Capability
+- `get_azimuth_range_0_360_deg(connector)` - Azimuth Range
+- `get_elevation_range_neg5_90_deg(connector)` - Elevation Range
+- `get_pointing_accuracy(connector)` - Pointing Accuracy
+- `get_angular_speed_configurable(connector)` - Configurable Angular Speed
+- `get_mode_stare_fixed(connector)` - Mode Stare Fixed
+- `get_mode_raster_scan(connector)` - Mode Raster Scan
+- `get_mode_cone_scan(connector)` - Mode Cone Scan
+- `get_mode_volume_scan(connector)` - Mode Volume Scan
+
+#### Remote Control & Commands
+- `get_ethernet_api_gui_control(connector)` - Ethernet API/GUI Control
+- `get_cmd_set_az(connector)` - Command Set Azimuth
+- `get_cmd_set_el(connector)` - Command Set Elevation
+- `get_cmd_home(connector)` - Command Home
+- `get_cmd_park(connector)` - Command Park
+- `get_cmd_start_scan(connector)` - Command Start Scan
 
 ## Examples
 
@@ -237,7 +252,7 @@ async def get_<attribute_name>(connector) -> Optional[<type>]:
 ```python
 import asyncio
 from infrastructure.opcua_connector import OpcUaConnector
-from domain.dto import get_state, get_status, get_heartbeat, get_pr59_temp1
+from domain.dto import get_state, get_status, get_heartbeat, get_elastic_channel_355_nm
 
 async def main():
     # Connect to OPC UA server
@@ -249,12 +264,12 @@ async def main():
         state = await get_state(connector)
         status = await get_status(connector)
         heartbeat = await get_heartbeat(connector)
-        temp1 = await get_pr59_temp1(connector)
+        elastic_355 = await get_elastic_channel_355_nm(connector)
         
         print(f"State: {state}")
         print(f"Status: {status}")
         print(f"Heartbeat: {heartbeat}")
-        print(f"PR59 Temp1: {temp1}")
+        print(f"Elastic Channel 355nm: {elastic_355}")
         
     finally:
         await connector.disconnect()
@@ -302,25 +317,24 @@ import asyncio
 from infrastructure.opcua_connector import OpcUaConnector
 from infrastructure.memory_history_repo import MemoryHistoryRepo
 from application.use_cases.monitor import monitor_subscription
-from domain.entity import SI3
+from domain.entity import LIDER
 
 async def main():
     connector = OpcUaConnector("opc.tcp://localhost:4840")
     await connector.connect()
     
-    si3 = SI3()
+    lider = LIDER()
     history = MemoryHistoryRepo(retention_minutes=10)
     
     # Attribute map: domain attribute -> OPC UA node ID
     ATTR_MAP = {
-        "heartbeat": "ns=2;s=heartbeat",
-        "pr59_temp1": "ns=2;s=si3_get_pr59_temp1",
-        "pr59_temp2": "ns=2;s=si3_get_pr59_temp2",
+        "HEARTBEAT": "ns=2;s=heartbeat",
+        "ELASTIC_CHANNEL_355_NM": "ns=2;s=lidar_get_ElasticChannel355Nm",
     }
     
     try:
         # Start monitoring with subscription (500ms period)
-        await monitor_subscription(connector, ATTR_MAP, si3, history, period_ms=500)
+        await monitor_subscription(connector, ATTR_MAP, lider, history, period_ms=500)
         
         # Access history
         heartbeat_history = history.get_history("heartbeat")
