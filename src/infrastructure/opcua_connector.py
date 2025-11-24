@@ -50,6 +50,15 @@ class OpcUaConnector:
         nodes = [self._client.get_node(nid) for nid in node_ids]
         return await asyncio.gather(*(n.read_value() for n in nodes))
 
+    async def write_node(self, node_id: str, value: Any, variant_type=None):
+        self._ensure_connected()
+        node = self._client.get_node(node_id)
+        if variant_type is not None:
+            val = ua.Variant(value, variant_type)
+            return await node.write_value(val)
+        else:
+            return await node.write_value(value)
+
     # --------- SUBSCRIPTION (no behavior changes) ----------
     async def create_subscription(self, period_ms: int, handler):
         if self._subscription:

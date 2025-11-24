@@ -23,6 +23,9 @@ from domain.dto import (
     get_state, get_status, get_heartbeat, get_app_name, 
     get_elastic_channel_355_nm, get_error_number, get_verbose_status
 )
+from domain.set_cmd_mode import (
+    set_laser_enable, set_hv_enable, set_laser_prf
+)
 
 from tornado.ioloop import IOLoop
 from bokeh.server.server import Server
@@ -324,10 +327,11 @@ def start_bokeh(history_repo, preferred_port: int = 5010, auto_open: bool = Fals
 #5) Update time       (call: update_time)
 # ===== Helpers =====
 MENU = """
-================= SI3 OPC UA =================
+================= LIDAR OPC UA =================
 1) Show Graph (Bokeh)
 2) Call generic method (call: <name>)
 3) Test OPC UA getters (usage example)
+4) Test OPC UA setters (usage example)
 b) Put in background (recover terminal)
 q) Exit
 ==============================================
@@ -492,6 +496,19 @@ async def run(opc_url: str, polling_rate_seconds: float | None = None):
                             print("[GETTERS] See src/domain/dto.py for all available functions.\n")
                         except Exception as e:
                             print(f"[ERROR] Error using getters: {type(e).__name__}: {e}")
+
+                    elif choice == "4":
+                        print("\n[SETTERS] Testing setter functions with OPC UA connection...")
+                        try:
+                            # Examples of different variable types
+                            await set_laser_enable(connector, False)
+                            await set_hv_enable(connector, True)
+                            await set_laser_prf(connector, 9)
+                            print("Setters set_laser_enable, set_hv_enable and set_laser_prf executed successfully to False, True and 9")
+                            print("\n[SETTERS] Example completed. You can copy these functions to your code.")
+                            print("[SETTERS] See src/domain/set_cmd_mode.py for all available functions.\n")
+                        except Exception as e:
+                            print(f"[ERROR] Error using setters: {type(e).__name__}: {e}")
 
                     elif choice in ("b", "bg", "background"):
                         # Put in background
