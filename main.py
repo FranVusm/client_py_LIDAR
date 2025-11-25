@@ -1,21 +1,23 @@
 # src/main.py
 import asyncio
 import threading
-from datetime import datetime
-from typing import Optional
 import socket
-
 import sys
 import os
+import webbrowser
+import argparse
+import traceback
+from datetime import datetime
+from typing import Optional, get_type_hints, get_origin, get_args
+from contextlib import closing
 
-# Add src to sys.path to ensure imports work even if package is not installed
-sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
+from tornado.ioloop import IOLoop
+from bokeh.server.server import Server
 
-import os
 from domain.entity import LIDER
 from infrastructure.opcua_connector import OpcUaConnector
 from infrastructure.memory_history_repo import MemoryHistoryRepo
-from application.use_cases.monitor import monitor_subscription, monitor_polling  
+from application.use_cases.monitor import monitor_subscription, monitor_polling
 from application.use_cases.controls import (
     serv_fixed, serv_random, change_fix_val, update_time, serv_out_of_range, method_cmd
 )
@@ -26,15 +28,10 @@ from domain.dto import (
 from domain.set_cmd_mode import (
     set_laser_enable, set_hv_enable, set_laser_prf
 )
-
-from tornado.ioloop import IOLoop
-from bokeh.server.server import Server
 from presentation.bokeh_app import make_bokeh_app
-from typing import get_type_hints, get_origin, get_args
 
 
 # ===== Config =====
-OPC_URL_DEFAULT = os.getenv("opcua_url")
 NS_IDX = 2  # namespace of the "Controls" object/methods
 
 # ===== Helper to filter graphable variables =====
@@ -42,7 +39,6 @@ def get_graphable_attrs(all_attrs: list) -> list:
     """
     Filters variables that are graphable (bool, int, float) based on types defined in LIDER.
     """
-    from typing import Union
     # Get type hints from the LIDER class
     type_hints = get_type_hints(LIDER)
     graphable_types = {bool, int, float}
@@ -75,7 +71,6 @@ def put_in_background():
     Puts the process in background by redirecting stdin to free the terminal.
     Returns the process PID.
     """
-    import sys
     
     pid = os.getpid()
     
@@ -244,10 +239,6 @@ ATTR_MAP = {
 # ===== Embedded Bokeh =====
 _bokeh_started = False
 def start_bokeh(history_repo, preferred_port: int = 5010, auto_open: bool = False):
-    import threading
-    import webbrowser
-    from contextlib import closing
-
     def _get_local_ip() -> str:
         """Gets the local IP (non-loopback) of the host."""
         try:
@@ -280,11 +271,6 @@ def start_bokeh(history_repo, preferred_port: int = 5010, auto_open: bool = Fals
     host_ip = _get_local_ip()  # ← gets host IP
 
     def bk_worker():
-        import asyncio
-        from tornado.ioloop import IOLoop
-        from bokeh.server.server import Server
-        from presentation.bokeh_app import make_bokeh_app
-
         asyncio.set_event_loop(asyncio.new_event_loop())
         io_loop = IOLoop.current()
         
@@ -572,7 +558,6 @@ async def run(opc_url: str, polling_rate_seconds: float | None = None):
 
 
 if __name__ == "__main__":
-    import argparse
     
     parser = argparse.ArgumentParser(
         description="SI3 OPC UA Client",
@@ -599,6 +584,5 @@ if __name__ == "__main__":
         print("\nProgram terminated by user.")
     except Exception as e:
         print(f"Error: {e}")
-        import traceback
         traceback.print_exc()
 
