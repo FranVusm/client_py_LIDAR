@@ -77,7 +77,7 @@ class LIDER:
     motorised_2_axis_mount: Optional[str] = None            # string
     three_d_scanning_capability: Optional[str] = None       # string
     azimuth_range_0_360_deg: Optional[float] = None         # float
-    elevation_range_neg5_90_deg: Optional[float] = None     # float
+    elevation_range_minus_5_90_deg: Optional[float] = None     # float
     pointing_accuracy: Optional[float] = None               # float
     angular_speed_configurable: Optional[float] = None      # float
     mode_stare_fixed: Optional[str] = None                  # string

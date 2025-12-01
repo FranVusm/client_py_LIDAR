@@ -73,6 +73,14 @@ Run the client with the OPC UA server URL:
 python main.py opc.tcp://localhost:4840
 ```
 
+#### Secure mode
+
+To use secure mode, add the following parameters:
+
+```bash
+python main.py opc.tcp://localhost:4840 --secure
+```
+
 ### With Polling Mode
 
 To use polling instead of subscriptions (useful for slower update rates):
@@ -82,6 +90,14 @@ python main.py opc.tcp://localhost:4840 --RATE 1.0
 ```
 
 The `--RATE` parameter specifies the polling interval in seconds (e.g., 0.5, 1.0, 2.5).
+
+#### Secure mode
+
+To use secure mode, add the following parameters:
+
+```bash
+python main.py opc.tcp://localhost:4840 --RATE 1.0 --secure
+```
 
 ### Interactive Menu
 

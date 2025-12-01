@@ -179,7 +179,7 @@ ATTR_MAP = {
     "MOTORISED_2_AXIS_MOUNT": "ns=2;s=lidar_get_Motorised2AxisMount",
     "THREE_D_SCANNING_CAPABILITY": "ns=2;s=lidar_get_ThreeDScanningCapability",
     "AZIMUTH_RANGE_0_360_DEG": "ns=2;s=lidar_get_AzimuthRange0360Deg",
-    "ELEVATION_RANGE_NEG5_90_DEG": "ns=2;s=lidar_get_ElevationRange_590Deg",
+    "ELEVATION_RANGE_MINUS_5_90_DEG": "ns=2;s=lidar_get_ElevationRange_590Deg",
     "POINTING_ACCURACY": "ns=2;s=lidar_get_PointingAccuracy",
     "ANGULAR_SPEED_CONFIGURABLE": "ns=2;s=lidar_get_AngularSpeedConfigurable",
     "MODE_STARE_FIXED": "ns=2;s=lidar_get_ModeStareFixed",
@@ -335,7 +335,7 @@ def _auto_convert(s: str):
     return t
 
 # ===== Main loop =====
-async def run(opc_url: str, polling_rate_seconds: float | None = None):
+async def run(opc_url: str, polling_rate_seconds: float | None = None, security_string: str = None):
     lider = LIDER()
     history = MemoryHistoryRepo(retention_minutes=10)
     connector = None
@@ -360,7 +360,7 @@ async def run(opc_url: str, polling_rate_seconds: float | None = None):
                     pass
             
             # Create new connection
-            connector = OpcUaConnector(opc_url)
+            connector = OpcUaConnector(opc_url, security_string=security_string)
             await connector.connect()
             
             # Start monitoring
@@ -576,10 +576,32 @@ if __name__ == "__main__":
         help="Polling rate in seconds (float, e.g.: 0.5, 1, 2.5). If not specified, uses OPC UA subscription"
     )
     
+    parser.add_argument(
+        "--secure",
+        action="store_true",
+        help="Enable Sign & Encrypt Basic256Sha256 security"
+    )
+    parser.add_argument(
+        "--cert",
+        type=str,
+        default="certificate.pem",
+        help="Path to client certificate file (default: certificate.pem)"
+    )
+    parser.add_argument(
+        "--key",
+        type=str,
+        default="private_key.pem",
+        help="Path to client private key file (default: private_key.pem)"
+    )
+    
     args = parser.parse_args()
     
+    security_string = None
+    if args.secure:
+        security_string = f"Basic256Sha256,SignAndEncrypt,{args.cert},{args.key}"
+    
     try:
-        asyncio.run(run(args.opc_url, polling_rate_seconds=args.RATE))
+        asyncio.run(run(args.opc_url, polling_rate_seconds=args.RATE, security_string=security_string))
     except KeyboardInterrupt:
         print("\nProgram terminated by user.")
     except Exception as e:

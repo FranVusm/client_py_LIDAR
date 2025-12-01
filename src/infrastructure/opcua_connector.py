@@ -4,9 +4,10 @@ from asyncua import Client, ua, Node
 from typing import List, Any
 
 class OpcUaConnector:
-    def __init__(self, opc_url: str, timeout: int = 5_000):
+    def __init__(self, opc_url: str, timeout: int = 5_000, security_string: str = None):
         self.url = opc_url
         self._client = Client(self.url, timeout=timeout/1000.0)
+        self.security_string = security_string
         self._subscription = None
         self._sub_handler = None
         self._lock = asyncio.Lock()  # necessary for disconnect and to avoid race conditions
@@ -16,6 +17,8 @@ class OpcUaConnector:
         return self._client
 
     async def connect(self):
+        if self.security_string:
+            await self._client.set_security_string(self.security_string)
         await self._client.connect()
 
     async def disconnect(self):

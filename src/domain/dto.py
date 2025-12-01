@@ -270,7 +270,7 @@ async def get_azimuth_range_0_360_deg(connector) -> Optional[float]:
     """Reads Azimuth Range"""
     return await connector.read_node("ns=2;s=lidar_get_AzimuthRange0360Deg")
 
-async def get_elevation_range_neg5_90_deg(connector) -> Optional[float]:
+async def get_elevation_range_minus5_90_deg(connector) -> Optional[float]:
     """Reads Elevation Range (-5 to 90)"""
     return await connector.read_node("ns=2;s=lidar_get_ElevationRange_590Deg")
 
