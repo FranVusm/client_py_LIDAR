@@ -80,6 +80,7 @@ To use secure mode, add the following parameters:
 ```bash
 python main.py opc.tcp://localhost:4840 --secure
 ```
+The key and cert flags are optional in secure mode. If specified, the certificate and key in the client_py_LIDAR folder are used. If not specified, the path can be passed as a parameter (both -key and cert must be .pem files).
 
 ### With Polling Mode
 
@@ -156,8 +157,8 @@ The Bokeh interface allows you to:
 - Real-time updates
 - Interactive controls (zoom, pan, reset)
 
-### 5. Method Calling
-- Generic method invocation
+### 5. Node Reading
+- Generic node value reading
 - Support for all methods under the "Controls" object
 - Examples: `ServFixed`, `ServRandom`, `change_fix_val`, `update_time`, `ServOutOfRange`
 
@@ -314,8 +315,8 @@ async def main():
         result1 = await serv_fixed(connector, NS_IDX)
         result2 = await serv_random(connector, NS_IDX)
         
-        # Call generic method by name
-        result3 = await method_cmd(connector, NS_IDX, "update_time", 12345)
+        # Read generic node by name
+        result3 = await method_cmd(connector, NS_IDX, "lidar_simul_on") ## lidar_simul_on is the NodeID
         
         print(f"ServFixed result: {result1}")
         print(f"ServRandom result: {result2}")

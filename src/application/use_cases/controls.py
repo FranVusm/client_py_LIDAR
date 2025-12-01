@@ -43,10 +43,13 @@ async def change_fix_val(connector, ns_idx, node_name, value):
     node = await _get_lider_node(connector, ns_idx)
     return await node.call_method(f"ns={ns_idx};s=change_fix_val", node_name, value)
 
-async def method_cmd(connector, ns_idx, method_name):
+async def method_cmd(connector, ns_idx, node_name):
     """
-    Call a generic method by name.
-    Assumes the method NodeId is ns=idx;s=method_name
+    Read a node value by name.
+    Assumes the NodeId is ns=idx;s=node_name
     """
-    node = await _get_lider_node(connector, ns_idx)
-    return await node.call_method(f"ns={ns_idx};s={method_name}")
+    # node = await _get_lider_node(connector, ns_idx)
+    # return await node.call_method(f"ns={ns_idx};s={ NodeID}")
+    node_id = f"ns={ns_idx};s={node_name}"
+    node = connector.client.get_node(node_id)
+    return await node.read_value()

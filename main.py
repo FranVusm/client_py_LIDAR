@@ -454,8 +454,8 @@ async def run(opc_url: str, polling_rate_seconds: float | None = None, security_
                         start_bokeh(history)
 
                     elif choice == "2":
-                        cmd_name = await loop.run_in_executor(None, input, "Method name to call: ")
-                        res = await method_cmd(connector, NS_IDX, cmd_name.strip())
+                        cmd_name = await loop.run_in_executor(None, input, "Node name to read: ")
+                        res = await method_cmd(connector, NS_IDX, cmd_name.strip()) ## cmd_name is the NodeID
                         print(f"{cmd_name} → {res}")
 
                     elif choice == "3":
@@ -560,7 +560,7 @@ async def run(opc_url: str, polling_rate_seconds: float | None = None, security_
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(
-        description="SI3 OPC UA Client",
+        description="LIDAR OPC UA Client",
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
     parser.add_argument(
